@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Text Workspace | Nepali English Extractor</title>
+<link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="toolbar">
+      <div class="brand">NEP <span class="en">ENG</span> <span class="dot">·</span> PDF Workspace</div>
+      <div class="theme-toggle" id="theme-toggle" aria-label="Toggle dark theme" role="switch" aria-checked="false">
+        <span class="thumb"></span>
+      </div>
+    </header>
+
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="section">
+          <h2>Document</h2>
+          <div class="meta" id="doc-meta">No document loaded.</div>
+          <div class="toolbar-row">
+            <button class="btn icon-btn" id="btn-prev" title="Previous page" aria-label="Previous page">‹</button>
+            <button class="btn icon-btn" id="btn-next" title="Next page" aria-label="Next page">›</button>
+          </div>
+          <div class="page-control" id="page-control">
+            <span class="page-label" id="page-label">Page <span id="page-num">1</span> of <span id="page-total">1</span></span>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Extraction</h2>
+          <button class="btn full" id="btn-extract-native">Extract Text (Native)</button>
+          <div class="hint">PDF.js text layer. Best for text-based PDFs.</div>
+          <button class="btn full" id="btn-extract-ocr">Extract with OCR</button>
+          <div class="hint hint-warn">Use for scanned pages or garbled legacy Nepali fonts (Preeti/Kantipur). Nepali + English. Slower.</div>
+          <div class="ocr-status" id="ocr-status"></div>
+
+          <div class="section-divider">Page selection</div>
+          <div class="page-select" id="page-select">
+            <label><input type="checkbox" id="sel-all"> All pages</label>
+            <div id="sel-custom" class="hidden">Custom pages (e.g. 1,3,5-7): <input type="text" id="sel-pages" placeholder="1,3,5-7"></div>
+          </div>
+          <input type="file" id="source-file" accept="application/pdf,.pdf" hidden>
+          <button class="btn full small" id="btn-choose-file">Choose PDF file…</button>
+          <div class="hint" id="source-hint">No PDF file loaded for re-extraction/OCR.</div>
+        </div>
+
+        <div class="section">
+          <h2>Search</h2>
+          <div class="search-box">
+            <input type="text" id="search" placeholder="Search Nepali or English…" aria-label="Search extracted text">
+            <button class="btn icon-btn" id="btn-search-clear" title="Clear">×</button>
+          </div>
+          <div class="search-count" id="search-count">0 matches</div>
+        </div>
+
+        <div class="section">
+          <h2>Export</h2>
+          <div class="export-grid">
+            <button class="btn" id="btn-export-txt">TXT</button>
+            <button class="btn" id="btn-export-json">JSON</button>
+            <button class="btn" id="btn-export-docx">DOCX</button>
+            <button class="btn full" id="btn-copy-all">Copy all text</button>
+            <button class="btn full" id="btn-copy-page">Copy this page</button>
+          </div>
+          <div class="hint">UTF-8 TXT, JSON with metadata, DOCX with Devanagari font.</div>
+        </div>
+
+        <div class="section">
+          <h2>Saved</h2>
+          <div class="saved-list" id="saved-list">No saved extractions.</div>
+          <button class="btn full small" id="btn-refresh-saved">Refresh</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="main-header">
+          <h1 id="viewer-title">Extracted Text</h1>
+          <div class="actions">
+            <button class="btn" id="btn-clear">Clear</button>
+          </div>
+        </div>
+
+        <div class="error-panel hidden" id="error-panel">
+          <div class="error-icon">!</div>
+          <div class="error-body">
+            <div class="error-title" id="error-title">Error</div>
+            <div class="error-message" id="error-message"></div>
+            <div class="error-suggestion" id="error-suggestion"></div>
+            <button class="btn" id="error-dismiss">Dismiss</button>
+          </div>
+        </div>
+
+        <div class="progress hidden" id="progress-panel">
+          <div class="progress-label" id="progress-label">Processing…</div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <button class="btn small" id="btn-cancel-progress">Cancel</button>
+        </div>
+
+        <div class="pages-viewport" id="pages-viewport">
+          <div class="page-placeholder" id="page-placeholder">
+            <div class="placeholder-icon">📄</div>
+            <p>No text extracted yet. Use the sidebar to extract a PDF.</p>
+            <p class="placeholder-hint">Supports Nepali (Devanagari) and English, mixed-language, page-level status.</p>
+          </div>
+          <div class="pages" id="pages"></div>
+        </div>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <span id="footer-text">Native extraction stays on your device · OCR downloads language data once</span>
+      <span class="version">v1.0.0</span>
+    </footer>
+  </div>
+
+  <script type="module" src="viewer.js"></script>
+</body>
+</html>

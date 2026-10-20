@@ -1,0 +1,69 @@
+{
+  "manifest_version": 3,
+  "name": "Nepali English PDF Extractor",
+  "version": "1.0.0",
+  "description": "Extract Nepali (Devanagari) and English text from PDFs opened in Firefox or linked from websites. Processes locally; no external server.",
+  "author": "pdfextractor",
+  "homepage_url": "https://github.com/anomalyco/opencode",
+
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "optional_permissions": [
+    "<all_urls>",
+    "downloads"
+  ],
+
+  "host_permissions": [],
+
+  "background": {
+    "scripts": ["src/background.js"],
+    "type": "module"
+  },
+
+  "action": {
+    "default_title": "Extract PDF text",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.svg",
+      "48": "icons/icon-48.svg",
+      "128": "icons/icon-128.svg"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pdf/pdf.worker.min.mjs",
+        "pdf/cmaps/*",
+        "pdf/standard_fonts/*",
+        "pdf/image_decoders/*",
+        "icons/*"
+      ],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+
+  "minimum_chrome_version": "109",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "nepali-pdf-extractor@example.com",
+      "strict_min_version": "109.0"
+    }
+  }
+}

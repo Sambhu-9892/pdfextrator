@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nepali English PDF Extractor</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">NEP <span class="en">ENG</span> PDF</div>
+      <div class="subtitle">Extract Nepali &amp; English text</div>
+    </header>
+
+    <div class="status" id="status"></div>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="extract">Extract</button>
+      <button class="tab" data-tab="links">Page PDFs</button>
+      <button class="tab" data-tab="import">Import File</button>
+    </nav>
+
+    <!-- Extract current PDF -->
+    <section class="panel" id="panel-extract">
+      <div class="tab-intro">
+        Open a PDF in Firefox, then click below to extract its text locally.
+      </div>
+      <button class="btn primary btn-extract" id="btn-extract">
+        Extract Current PDF
+      </button>
+      <div class="hint" id="extract-hint">Nepali text looks garbled (legacy font)? Open the workspace and click “Extract with OCR”.</div>
+    </section>
+
+    <!-- Discover PDFs on page -->
+    <section class="panel hidden" id="panel-links">
+      <div class="tab-intro">
+        Visible PDF links on the current webpage:
+      </div>
+      <div class="link-list" id="link-list">
+        <div class="placeholder">Click "Discover PDF Links" to scan this page.</div>
+      </div>
+      <div class="row">
+        <button class="btn" id="btn-discover">Discover PDF Links</button>
+        <button class="btn primary" id="btn-extract-selected">Extract Selected</button>
+      </div>
+      <div class="hint" id="links-hint"></div>
+    </section>
+
+    <!-- Import local file -->
+    <section class="panel hidden" id="panel-import">
+      <div class="tab-intro">
+        Download a PDF first, then import it here for extraction.
+      </div>
+      <label class="file-label">
+        <input type="file" id="file-input" accept="application/pdf,.pdf" hidden>
+        Choose PDF file
+      </label>
+      <div class="hint">Supports local PDF files only. No data leaves your browser.</div>
+    </section>
+
+    <div class="divider">Quick actions</div>
+    <div class="actions">
+      <button class="btn secondary" id="btn-open-viewer">Open full workspace</button>
+      <button class="btn secondary" id="btn-settings">Settings</button>
+    </div>
+
+    <footer class="footer">
+      <div>Processes locally • No external server</div>
+      <div class="version">v1.0.0</div>
+    </footer>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

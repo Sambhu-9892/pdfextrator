@@ -1,0 +1,28 @@
+{
+  "name": "nepali-english-pdf-extractor",
+  "version": "1.0.0",
+  "description": "Firefox extension to extract Nepali (Devanagari) and English text from PDFs",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build:assets": "node scripts/copy-assets.js",
+    "build:js": "node scripts/build.js",
+    "build": "npm run typecheck && npm run build:js && npm run build:assets",
+    "dev": "npm run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "package:zip": "node scripts/package-zip.js"
+  },
+  "dependencies": {
+    "docx": "9.3.0",
+    "pdfjs-dist": "4.8.69",
+    "tesseract.js": "5.1.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "jsdom": "25.0.0",
+    "typescript": "5.8.3",
+    "vitest": "3.2.4"
+  }
+}
